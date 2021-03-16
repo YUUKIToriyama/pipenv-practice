@@ -1,25 +1,11 @@
-import numpy as np
-from nptyping import NDArray, Float64
+import pandas as pd
 
-a = np.array([1, 2, 3])
-b = np.array([4, 5, 6])
+csv = pd.read_csv("~/デスクトップ/kyoto.test.csv", names = ['氏名', '郵便番号', '住所', '電話番号'])
+#print(csv)
 
-def add(left: NDArray[np.float64], right: NDArray[np.float64]) -> NDArray[np.float64]:
-	print(left + right)
+name = csv['氏名'].str.split('　', expand=True)
+name.rename(columns={0: '苗字', 1: '名前'}, inplace=True)
 
-def multiple(arr: NDArray[np.float64], scalar: Float64) -> NDArray[np.float64]:
-	print(arr * scalar)
-
-def hadamard(left: NDArray[np.float64], right: NDArray[np.float64]) -> NDArray[np.float64]:
-	print(left * right)
-
-def dot(left: NDArray[np.float64], right: NDArray[np.float64]) -> NDArray[np.float64]:
-	print(np.dot(left, right))
-
-add(a, b)
-multiple(a, 10)
-hadamard(a, b)
-dot(a, b)
-
-c = np.array([a, b])
-print(c)
+print(name)
+csv = pd.concat([name, csv], axis=1)
+print(csv)
